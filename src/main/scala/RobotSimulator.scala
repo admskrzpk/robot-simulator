@@ -1,7 +1,7 @@
 object RobotSimulator extends App {
 
-  var x = args(1)
-  var y = args(2)
+  var x = args(1).toInt
+  var y = args(2).toInt
   var orientation = args(3)
   val input = args(0).split("").toList
   println(s"Robot is on $x and $y positions facing $orientation. Now robot is executing commands: $input ")
@@ -25,8 +25,11 @@ object RobotSimulator extends App {
     }
   }
 
-  def advance(a: String) = a match {
-    case
+  def advance() = orientation match {
+    case "north" => y + 1
+    case "east" => x + 1
+    case "south" => y - 1
+    case "west" => x - 1
   }
 
   //def instructionsReader(instructions: String) = ???
