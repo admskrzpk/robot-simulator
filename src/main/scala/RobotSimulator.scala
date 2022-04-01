@@ -11,11 +11,23 @@ object RobotSimulator extends App {
 
 
   def turn (r: String) = r match {
-    case "R" =>
-    case "L" =>
+    case "R" => orientation match {
+      case "north" => "east"
+      case "east" => "south"
+      case "south" => "east"
+      case "west" => "north"
+    }
+    case "L" => orientation match {
+      case "north" => "west"
+      case "east" => "north"
+      case "south" => "west"
+      case "west" => "south"
+    }
   }
 
-  def advance(a: String) = ???
+  def advance(a: String) = a match {
+    case
+  }
 
   //def instructionsReader(instructions: String) = ???
 
@@ -30,5 +42,4 @@ object RobotSimulator extends App {
 
    */
 
-}
 }
