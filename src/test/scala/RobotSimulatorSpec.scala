@@ -1,0 +1,7 @@
+class RobotSimulatorSpec {
+
+  //robot should
+
+
+
+}
