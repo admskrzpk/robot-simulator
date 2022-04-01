@@ -26,7 +26,7 @@ object RobotSimulator extends App {
         case "west" => x = x - 1
       }
     }
-    println(s"Robots position is $x,$y facing $orientation")
+    println(s"Robot position is $x & $y, facing $orientation.")
   }
 
   robotMoving(command)
