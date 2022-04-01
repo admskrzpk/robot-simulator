@@ -5,43 +5,36 @@ object RobotSimulator extends App {
   var x = args(1).toInt
   var y = args(2).toInt
   var orientation = args(3)
-  val input = args(0).split("").toList
-  println(s"Robot is on $x and $y positions facing $orientation. Now robot is executing commands: $input ")
+  val commands = args(0).split("").toList
+  println(s"Robot is on $x and $y positions facing $orientation. Now robot is executing commands: $commands ")
 
   case class Robot(x: Int, y: Int, orientation: String)
 
   val robot = Robot(x = args(1).toInt, y = args(2).toInt, orientation = args(3))
 
-  def turnRight(o: String): String = input match {
-    case "north" => orientation = "east"
-    case "east" => orientation = "south"
-    case "south" => orientation = "east"
-    case "west" => orientation = "north"
-    case _ => "wrong command"
+  def turn(command: String): String = commands match {
+    case "L" if orientation == "north" => orientation = "east"
+    case "L" if orientation == "east" => orientation = "south"
+    case "L" if orientation == "east" => orientation = "north"
+    case "L" if orientation == "north" => orientation = "west"
+    case "R" if orientation == "north" => orientation = "east"
+    case "R" if orientation == "east" => orientation = "north"
+    case "R" if orientation == "south" => orientation = "west"
+    case "R" if orientation == "west" => orientation = "south"
   }
 
-  def turnLeft(o: String): String = input match {
-    case "north" => orientation = "west"
-    case "east" => orientation = "north"
-    case "south" => orientation = "west"
-    case "west" => orientation = "south"
-    case _ => "wrong command"
+  def advance(command: String): (Int, Int) = orientation match {
+    case "north" => (x, y + 1)
+    case "east" => (x + 1, y)
+    case "south" => (x, y - 1)
+    case "west" => (x - 1, y)
   }
 
+  commands.foldLeft(robot)(commands match {
+    case "R" => turn(orientation)
+    case "L" => turn(orientation)
+    case "A" => advance(x, y)
+  })
 
-def advance(x: Int, y: Int): Int = orientation match {
-  case "north" => y + 1
-  case "east" => x + 1
-  case "south" => y - 1
-  case "west" => x - 1
-}
-
-
-input.foreach(input match {
-  case "R" => turnRight(orientation)
-  case "L" => turnLeft(orientation)
-  case "A" => advance(x, y)
-}
-
-println(s"Robots position is $x,$y facing $orientation?")
+  println(s"Robots position is $x,$y facing $orientation?")
 }
