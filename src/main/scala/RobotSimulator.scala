@@ -1,3 +1,5 @@
+import scala.collection.mutable.ArrayBuffer
+
 object RobotSimulator extends App {
 
   var x = args(1).toInt
@@ -6,43 +8,40 @@ object RobotSimulator extends App {
   val input = args(0).split("").toList
   println(s"Robot is on $x and $y positions facing $orientation. Now robot is executing commands: $input ")
 
+  case class Robot(x: Int, y: Int, orientation: String)
 
-  val directions = Seq("north", "east", "south", "west")
+  val robot = Robot(x = args(1).toInt, y = args(2).toInt, orientation = args(3))
 
-
-  def turn (r: String) = r match {
-    case "R" => orientation match {
-      case "north" => "east"
-      case "east" => "south"
-      case "south" => "east"
-      case "west" => "north"
-    }
-    case "L" => orientation match {
-      case "north" => "west"
-      case "east" => "north"
-      case "south" => "west"
-      case "west" => "south"
-    }
+  def turnRight(o: String): String = input match {
+    case "north" => orientation = "east"
+    case "east" => orientation = "south"
+    case "south" => orientation = "east"
+    case "west" => orientation = "north"
+    case _ => "wrong command"
   }
 
-  def advance() = orientation match {
-    case "north" => y + 1
-    case "east" => x + 1
-    case "south" => y - 1
-    case "west" => x - 1
+  def turnLeft(o: String): String = input match {
+    case "north" => orientation = "west"
+    case "east" => orientation = "north"
+    case "south" => orientation = "west"
+    case "west" => orientation = "south"
+    case _ => "wrong command"
   }
 
-  //def instructionsReader(instructions: String) = ???
+
+def advance(x: Int, y: Int): Int = orientation match {
+  case "north" => y + 1
+  case "east" => x + 1
+  case "south" => y - 1
+  case "west" => x - 1
+}
 
 
-  /*
-  input.foldleft(?) {(?,?) => ? match {
-  case "R" => turnRight(robot)
-  case "L" => turnLeft(robot)
-  case "A" => advance(robot)
-  }
-  println("Robots new position is x,y facing ?"
+input.foreach(input match {
+  case "R" => turnRight(orientation)
+  case "L" => turnLeft(orientation)
+  case "A" => advance(x, y)
+}
 
-   */
-
+println(s"Robots position is $x,$y facing $orientation?")
 }
